@@ -1,0 +1,16 @@
+{
+    "employee":[
+        {
+            "id":1,
+            "name":"Lavanya",
+            "department":[
+                "HR"
+            ],
+            "gender":"Female",
+            "salary":"80000",
+            "startDate":"2 Jul 2021",
+            "notes":"",
+            "profilePic":"../../assets/profile-image/Ellipse-1.png"
+        }
+    ]
+}
