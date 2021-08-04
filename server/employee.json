@@ -1,16 +1,81 @@
 {
-    "employee":[
-        {
-            "id":1,
-            "name":"Lavanya",
-            "department":[
-                "HR"
-            ],
-            "gender":"Female",
-            "salary":"80000",
-            "startDate":"2 Jul 2021",
-            "notes":"",
-            "profilePic":"../../assets/profile-image/Ellipse-1.png"
-        }
-    ]
+  "employee": [
+    {
+      "id": 1,
+      "name": "Lavanya",
+      "department": [
+        "HR"
+      ],
+      "gender": "Female",
+      "salary": "80000",
+      "startDate": "2 Jul 2021",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse-1.png"
+    },
+    {
+      "id": 2,
+      "name": "Rajnish",
+      "department": [
+        "Sales",
+        "Finance",
+        "Engineer"
+      ],
+      "gender": "Male",
+      "salary": "980000",
+      "startDate": "15 Jul 2020",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 3,
+      "name": "Vishnu",
+      "department": [
+        "HR",
+        "Sales",
+        "Finance"
+      ],
+      "gender": "Male",
+      "salary": "800000",
+      "startDate": "15 May 2020",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 6,
+      "name": "Rajnish Sahu",
+      "department": [
+        "HR",
+        "Engineer"
+      ],
+      "gender": "Male",
+      "salary": "89999",
+      "startDate": "6 Jul 2021",
+      "notes": "Testing",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 7,
+      "name": "Vaishali",
+      "department": [
+        "HR"
+      ],
+      "gender": "Female",
+      "salary": "98000",
+      "startDate": "17 Jul 2021",
+      "notes": "Testing",
+      "profilePic": "../../assets/Ellipse -1.png"
+    },
+    {
+      "id": 8,
+      "name": "Shatakshi ",
+      "department": [
+        "Others"
+      ],
+      "gender": "Female",
+      "salary": "98000",
+      "startDate": "11 Jul 2021",
+      "notes": "Engineer",
+      "profilePic": "../../assets/Ellipse -1.png"
+    }
+  ]
 }

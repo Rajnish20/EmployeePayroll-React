@@ -1,10 +1,19 @@
 import './App.css';
 import React from 'react';
-
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import PayrollForm from './component/payroll-form/payroll-form';
 class App extends React.Component{
   render(){
     return(
-      <h1>Hello world</h1>
+      <div>
+        <BrowserRouter>
+         <Switch>
+           <Route exact path="/payroll-form">
+             <PayrollForm/>
+           </Route>
+         </Switch>
+        </BrowserRouter>
+      </div>
     )
   }
 }
