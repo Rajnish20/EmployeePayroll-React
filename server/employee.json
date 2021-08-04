@@ -88,6 +88,18 @@
       "startDate": "15 Jul 2021",
       "notes": "Heyy There !",
       "profilePic": "../../assets/Ellipse -1.png"
+    },
+    {
+      "id": 10,
+      "name": "Edward",
+      "department": [
+        "Finance"
+      ],
+      "gender": "Male",
+      "salary": "980000",
+      "startDate": "15 Jul 2021",
+      "notes": "Heyy There !",
+      "profilePic": "../../assets/Ellipse -3.png"
     }
   ]
 }
