@@ -118,7 +118,7 @@ class Payroll extends React.Component{
         if(this.state.isError){
             window.alert("Please Fill correct values");
         }else{
-            let object = {
+            let employeeObject = {
                 id:'',
                 name: this.state.name,
                 department: this.state.department,
@@ -128,15 +128,13 @@ class Payroll extends React.Component{
                 notes:this.state.notes,
                 profilePic:this.state.profile,
             }
-            const employeeService = new EmployeeService();
-            employeeService.addEmployee(object)
+            new EmployeeService().addEmployee(employeeObject)
              .then((data) => {
-                 console.log("data added");
+                window.alert("Data Added Succesfully");
              })
              .catch((err) => {
-                 console.log("Error While Add");
+                console.log("Error While Add");
              })
-             window.alert(JSON.stringify(object));
         }
        
     }

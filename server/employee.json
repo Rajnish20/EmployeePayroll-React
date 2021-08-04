@@ -76,6 +76,18 @@
       "startDate": "11 Jul 2021",
       "notes": "Engineer",
       "profilePic": "../../assets/Ellipse -1.png"
+    },
+    {
+      "id": 9,
+      "name": "Shivanya Sahu",
+      "department": [
+        "Finance"
+      ],
+      "gender": "Female",
+      "salary": "98000",
+      "startDate": "15 Jul 2021",
+      "notes": "Heyy There !",
+      "profilePic": "../../assets/Ellipse -1.png"
     }
   ]
 }
