@@ -128,8 +128,8 @@ class Payroll extends React.Component{
                 notes:this.state.notes,
                 profilePic:this.state.profile,
             }
-            new EmployeeService().addEmployee(employeeObject).then(data => {
-                console.log("data added successfully")
+            new EmployeeService().addEmployee(employeeObject).then(responseText => {
+                console.log("data added successfully" +JSON.stringify(responseText.data));
              })
              .catch(err => {
                 console.log("Error While Add");

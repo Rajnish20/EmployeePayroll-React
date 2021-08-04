@@ -10,7 +10,7 @@
       "salary": "80000",
       "startDate": "2 Jul 2021",
       "notes": "",
-      "profilePic": "../../assets/Ellipse-1.png"
+      "profilePic": "../../assets/Ellipse -1.png"
     },
     {
       "id": 2,
@@ -99,6 +99,42 @@
       "salary": "980000",
       "startDate": "15 Jul 2021",
       "notes": "Heyy There !",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 11,
+      "name": "Kartik",
+      "department": [
+        "Engineer"
+      ],
+      "gender": "Male",
+      "salary": "9879869",
+      "startDate": "15 Jul 2021",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 12,
+      "name": "Gaurav",
+      "department": [
+        "Sales"
+      ],
+      "gender": "Male",
+      "salary": "87009",
+      "startDate": "11 Jul 2021",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -8.png"
+    },
+    {
+      "id": 13,
+      "name": "Rahul Sahu",
+      "department": [
+        "Finance"
+      ],
+      "gender": "Male",
+      "salary": "988090",
+      "startDate": "9 Jul 2021",
+      "notes": "Cool",
       "profilePic": "../../assets/Ellipse -3.png"
     }
   ]
