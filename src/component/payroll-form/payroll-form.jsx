@@ -1,15 +1,32 @@
 import React from 'react'
 import './payroll-form.scss';
+import {Link, withRouter, useParams} from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import profile1 from '../../assets/Ellipse -3.png';
 import profile2 from '../../assets/Ellipse -1.png';
 import profile3 from '../../assets/Ellipse -8.png';
 import profile4 from '../../assets/Ellipse -7.png';
 import EmployeeService from '../../service/employeeservice';
+
+const initialState = {
+    name: '',
+    profile: '',
+    gender: '',
+    department: [],    
+    salary: 40000,
+    day: '1',
+    month: 'Jan',
+    year: '2020',
+    startDate: new Date("1 Jan 2020"),
+    notes: '',
+    id: '',      
+    
+}
+
 class Payroll extends React.Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             name:'',
             profile:'',
@@ -18,7 +35,7 @@ class Payroll extends React.Component{
                 'HR', 'Sales', 'Finance', 'Engineer', 'Others'
             ],
             department:[],
-            salary:'',
+            salary:'40000',
             notes:'',
             day:'1',
             month:'Jan',
@@ -29,6 +46,7 @@ class Payroll extends React.Component{
             salaryError:'',
             dateError:'',
             isError:'',
+            isUpdate:'',
 
         }
     }
@@ -55,8 +73,8 @@ class Payroll extends React.Component{
 
     handleSalaryChange =(e) => {
         this.setState({salary:e.target.value});
-        if(e.target.value < 4000){
-            this.setState({salaryError:'Salary must be greater than 4000'})
+        if(e.target.value < 40000){
+            this.setState({salaryError:'Salary must be greater than 40000'})
             this.setState({isError:true})
         }else{
             this.setState({salaryError:''});
@@ -108,34 +126,85 @@ class Payroll extends React.Component{
             checkArray.push(name);
         this.setState({department:checkArray});
     }
-     getChecked = (name) => {
+    getChecked = (name) => {
         return this.state.department && this.state.department.includes(name);
     }
 
+    componentDidMount = () => {
+        let id = this.props.match.params.id;
+        if(id !== undefined && id !==''){
+            new EmployeeService().getEmployeeById(id)
+            .then(responseText => {
+                this.setEmployeeForm(responseText.data);
+            }).catch(error => {
+                console.log("Error while Fetching Data");
+            })
+        }
+    }
+
+    setEmployeeForm = (employeeData) => {
+        let date = (employeeData.startDate).split(" ");
+        this.setState({
+            id:employeeData.id,
+            name:employeeData.name,
+            gender:employeeData.gender,
+            department:employeeData.department,
+            salary:employeeData.salary,
+            notes:employeeData.notes,
+            profile:employeeData.profilePic,
+            day:date[0],
+            month:date[1],
+            year:date[2],
+            isUpdate:true,
+        })
+    }
+
     save = async (event) => {
-        
+        event.preventDefault();
         console.log("save button clicked");
         if(this.state.isError){
             window.alert("Please Fill correct values");
         }else{
             let employeeObject = {
-                id:'',
+                id:this.state.id,
                 name: this.state.name,
                 department: this.state.department,
                 gender:this.state.gender,
                 salary:this.state.salary,
-                startDate:`${this.state.day} ${this.state.month} ${this.state.year}`,
+                startDate:this.stringifyDate(this.state.startDate),
                 notes:this.state.notes,
                 profilePic:this.state.profile,
             }
-            new EmployeeService().addEmployee(employeeObject).then(responseText => {
-                console.log("data added successfully" +JSON.stringify(responseText.data));
-             })
-             .catch(err => {
-                console.log("Error While Add");
-             })
+            if(this.state.isUpdate){
+                new EmployeeService().updateEmployee(employeeObject).then(responseText => {
+                    console.log("data Updated successfully" +JSON.stringify(responseText.data));
+                    this.props.history.push('/home');
+                 })
+                 .catch(err => {
+                    console.log("Error While Updated");
+                 })
+
+            }else{
+                new EmployeeService().addEmployee(employeeObject).then(responseText => {
+                    console.log("data added successfully" +JSON.stringify(responseText.data));
+                    this.props.history.push('/home');
+                 })
+                 .catch(err => {
+                    console.log("Error While Add");
+                 })
+            }
         }
        
+    }
+
+    stringifyDate = (date) => {
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const newDate = !date ? "undefined" : new Date(Date.parse(date)).toLocaleDateString('en-GB', options);
+        return newDate;
+      }
+
+    reset =() => {
+        this.setState({...initialState});
     }
     
     render(){
@@ -150,35 +219,35 @@ class Payroll extends React.Component{
                         </div>
                     </div>
                 </header>
-                <div className="form-content">
+                <div className="form-content" onSubmit={this.save} onReset={this.reset}>
                     <form className="form" action="#">
                         <div className="form-header">Employee Payroll Form</div>
                         <div className="row-content">
                             <label className="label text" for="name">Name</label>
-                            <input className="input" type="text" id="name" name="name" placeholder="Enter Your Name" onChange={(e) => this.handleNameChange(e)} required />
+                            <input className="input" type="text" id="name" name="name" value={this.state.name} placeholder="Enter Your Name" onChange={(e) => this.handleNameChange(e)} required />
                             <error-output className="text-error" htmlFor="name">{this.state.nameError}</error-output>
                         </div>
                         <div className="row-content">
-                            <label className="label text" for="Profile">Profile image</label>
+                            <label className="label text" htmlfor="Profile">Profile image</label>
                             <div className="profile-radio-content">
                             <label>
                                 <input type="radio" id="profile1" name="profile"
-                                value="../../assets/Ellipse -3.png" required onChange={(e) => this.handleProfileChange(e)}/>
+                                value="../../assets/Ellipse -3.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile ==='../../assets/Ellipse -3.png'} />
                                 <img className="profile" id="image1"src={profile1} alt=""/>                    
                             </label>
                             <label>
                                 <input type="radio" id="profile2" name="profile"
-                                value="../../assets/Ellipse -1.png" required onChange={(e) => this.handleProfileChange(e)}/>
+                                value="../../assets/Ellipse -1.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -1.png'}  />
                                 <img className="profile" id="image2"src={profile2} alt=""/>                    
                             </label>
                             <label>
                                 <input type="radio" id="profile3" name="profile"
-                                value="../../assets/Ellipse -8.png" required onChange={(e) => this.handleProfileChange(e)} />
+                                value="../../assets/Ellipse -8.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -8.png'} />
                                 <img className="profile" id="image3"src={profile3} alt=""/>                    
                             </label>
                             <label>
                                 <input type="radio" id="profile4" name="profile"
-                                value="../../assets/Ellipse -7.png" required onChange={(e) => this.handleProfileChange(e)} />
+                                value="../../assets/Ellipse -7.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -7.png'} />
                                 <img className="profile" id="image4"src={profile4} alt=""/>                    
                             </label>
                             </div>
@@ -186,11 +255,11 @@ class Payroll extends React.Component{
                         <div className="row-content">
                             <label className="label text" for="gender">Gender</label>
                             <div>
-                                <input type="radio" id="male" name="gender" value="Male" onChange={(e) => this.handleGenderChange(e)} />
+                                <input type="radio" id="male" name="gender" value="Male" checked={this.state.gender === 'Male'} onChange={(e) => this.handleGenderChange(e)} />
                                 <label className="text" for="male">Male</label>
-                                <input type="radio" id="female" name="gender" value="Female" onChange={(e) => this.handleGenderChange(e)}/>
+                                <input type="radio" id="female" name="gender" value="Female" checked={this.state.gender === 'Female'} onChange={(e) => this.handleGenderChange(e)}/>
                                 <label className="text" for="female">Female</label>
-                                <input type="radio" id="other" name="gender" value="Other" onChange={(e) => this.handleGenderChange(e)}/>
+                                <input type="radio" id="other" name="gender" value="Other" checked={this.state.gender === 'Other'}onChange={(e) => this.handleGenderChange(e)}/>
                                 <label className="text" for="other">Other</label>
                             </div>
                         </div>
@@ -208,17 +277,17 @@ class Payroll extends React.Component{
                         </div>
                         <div className="row-content">
                             <label className="label text" htmlFor="salary">Salary</label>
-                            <input className="input" type="number" onChange={(e) => this.handleSalaryChange(e)} id="salary" name="salary" placeholder="Salary"/>
+                            <input className="input" type="number" onChange={(e) => this.handleSalaryChange(e)} id="salary" name="salary" value={this.state.salary} placeholder="Salary"/>
                             <error-output className="salary-error" htmlFor="salary">{this.state.salaryError}</error-output>
                         </div>
                         <div className="row-content">
                             <label className="label text" for="notes">Note</label>
-                            <textarea id="notes" className="input" name="notes" placeholder="" onChange={(e) => this.handleNoteChange(e)}></textarea>
+                            <textarea id="notes" className="input" name="notes" placeholder="" value={this.state.notes} onChange={(e) => this.handleNoteChange(e)}></textarea>
                         </div>
                         <div className="row-content">
                             <label className="label text" for="startDate">Start Date</label>
                             <div id="date">
-                                <select id="day" name="day" onChange={(e) =>this.dayChangeHandler(e) }>
+                                <select id="day" name="day" value={this.state.day} onChange={(e) =>this.dayChangeHandler(e) }>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -251,7 +320,7 @@ class Payroll extends React.Component{
                                 <option value="30">30</option>
                                 <option value="31">31</option>
                                 </select>
-                                <select id="month" name="month" onChange={(e) => this.monthChangeHandler(e)}>
+                                <select id="month" name="month" value={this.state.month} onChange={(e) => this.monthChangeHandler(e)}>
                                     <option value="Jan">January</option>
                                     <option value="Feb">February</option>
                                     <option value="Mar">March</option>
@@ -265,7 +334,7 @@ class Payroll extends React.Component{
                                     <option value="Nov">November</option>
                                     <option value="Dec">December</option>
                                 </select>
-                                <select id="year" name="year" onChange={(e) => this.yearChangeHandler(e)}>
+                                <select id="year" name="year" value={this.state.year} onChange={(e) => this.yearChangeHandler(e)}>
                                     <option value="2021">2021</option>
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
@@ -277,9 +346,11 @@ class Payroll extends React.Component{
                             <error-output className="date-error" htmlFor="startDate">{this.state.dateError}</error-output>
                         </div>
                         <div className="button-content">
-                            <a href="./HomePage.html" className="resetButton button cancelButton">Cancel</a>
+                            <Link to="home" className="resetButton button cancelButton">
+                                Cancel
+                            </Link>
                             <div className="submit-reset">
-                                <button type="submit" className="button submitButton" id="submitButton" onClick={(e) => this.save(e)}>Submit</button>
+                                <button type="submit" className="button submitButton" id="submitButton">Submit</button>
                                 <button type="reset" className="resetButton button" id="resetBtn">Reset</button>
                             </div>
                         </div>
@@ -292,4 +363,4 @@ class Payroll extends React.Component{
         );
     }
 }
-export default Payroll;
+export default withRouter(Payroll);

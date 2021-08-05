@@ -126,15 +126,40 @@
       "profilePic": "../../assets/Ellipse -8.png"
     },
     {
-      "id": 13,
-      "name": "Rahul Sahu",
+      "id": 14,
+      "name": "Vivaan",
+      "department": [
+        "Engineer",
+        "Others"
+      ],
+      "gender": "Male",
+      "salary": "98000",
+      "startDate": "13 Jul 2021",
+      "notes": "Engineer",
+      "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 15,
+      "name": "Shikha Singh",
       "department": [
         "Finance"
       ],
+      "gender": "Female",
+      "salary": "9800",
+      "startDate": "11 Jul 2021",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -8.png"
+    },
+    {
+      "id": 17,
+      "name": "Valmiki Singh",
+      "department": [
+        "HR"
+      ],
       "gender": "Male",
-      "salary": "988090",
-      "startDate": "9 Jul 2021",
-      "notes": "Cool",
+      "salary": "50000",
+      "startDate": "1 Jan 2021",
+      "notes": "",
       "profilePic": "../../assets/Ellipse -3.png"
     }
   ]

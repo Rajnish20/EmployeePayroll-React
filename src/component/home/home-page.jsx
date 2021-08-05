@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../assets/logo.png';
 import addIcon from '../../assets/add-24px.svg';
 import './home-page.scss';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import EmployeeService from '../../service/employeeservice';
 import Display from '../display/main-page.jsx'
 
@@ -61,4 +61,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default withRouter(HomePage);

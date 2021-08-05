@@ -10,12 +10,12 @@
 .table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 1px;
+    border-spacing: 0 8px;
     min-width: 800px;
 }
 
-td,th{
-    padding: 10px 8px;
+td{
+    padding: 5px 8px;
     text-align: left;
 }
 th{
@@ -26,11 +26,12 @@ th{
     letter-spacing: 1px;
     text-transform: uppercase;
     opacity: 1;
+    padding: 10px 8px;
 }
 
 tr:not(:first-child){
     background: #ffffff 0% 0% no-repeat padding-box;
-    border: 1px solid #e3e3e3;
+    outline: thin solid #e3e3e3;
     border-radius: 3px;
 }
 

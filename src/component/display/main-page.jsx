@@ -7,8 +7,12 @@ import Profile2 from '../../assets/Ellipse -3.png';
 import Profile3 from '../../assets/Ellipse -7.png';
 import Profile4 from '../../assets/Ellipse -8.png';
 import {withRouter} from 'react-router-dom';
+import EmployeeService from '../../service/employeeservice';
 
 const Display = (props) => {
+    const update = (employeeId) => {
+        props.history.push(`/payroll-form/${employeeId}`);
+    }
     return(
         <table id ="display" className="table">
             <tbody>
@@ -23,15 +27,15 @@ const Display = (props) => {
                 </tr>
                     {
                     props.employeeArray.map((employee) => (
-                    <tr>
+                    <tr key = {employee.id}>
                         <td><img src={profilePicture(employee.profilePic)} alt="" /></td>
                         <td>{employee.name}</td>
                         <td>{employee.gender}</td>
                         <td>{employee.department.map(dept => (<div className="dept-label">{dept}</div>))}</td>
                         <td> ₹ {employee.salary}</td>
-                        <td>{employee.startDate}</td>
-                        <td><img src={deleteIcon} onClick={() => remove(employee.id)} alt="delete" />
-                        <img src={updateIcon} onClick={() => edit(employee.id)} alt="edit" /></td>
+                        <td>{stringifyDate(employee.startDate)}</td>
+                        <td><img src={deleteIcon} onClick={() => deleteEmployee(employee.id)} alt="delete" />
+                        <img src={updateIcon} onClick={() => update(employee.id)} alt="edit" /></td>
                     </tr>
                 ))
             }
@@ -39,11 +43,22 @@ const Display = (props) => {
         </table>
     )
 }
-const remove = (id) => {
+
+const stringifyDate = (date) => {
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const newDate = !date ? "undefined" : new Date(Date.parse(date)).toLocaleDateString('en-GB', options);
+    return newDate;
+  }
+const deleteEmployee = (employeeId) => {
+    new EmployeeService().deleteEmployee(employeeId)
+    .then(responseText => {
+        window.alert("Employee Removed Successfully");
+        window.location.reload();
+    }).catch(error => {
+        console.log("Error while Removing the Employee");
+    })
 }
 
-const edit = (id) => {
-}
 
 const profiles = ["../../assets/Ellipse -1.png","../../assets/Ellipse -3.png","../../assets/Ellipse -7.png",
             "../../assets/Ellipse -8.png"];
