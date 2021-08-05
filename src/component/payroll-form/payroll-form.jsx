@@ -152,6 +152,7 @@ class Payroll extends React.Component{
             salary:employeeData.salary,
             notes:employeeData.notes,
             profile:employeeData.profilePic,
+            startDate:employeeData.startDate,
             day:date[0],
             month:date[1],
             year:date[2],
@@ -346,7 +347,7 @@ class Payroll extends React.Component{
                             <error-output className="date-error" htmlFor="startDate">{this.state.dateError}</error-output>
                         </div>
                         <div className="button-content">
-                            <Link to="home" className="resetButton button cancelButton">
+                            <Link to="/home" className="resetButton button cancelButton">
                                 Cancel
                             </Link>
                             <div className="submit-reset">

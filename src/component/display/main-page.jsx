@@ -28,14 +28,14 @@ const Display = (props) => {
                     {
                     props.employeeArray.map((employee) => (
                     <tr key = {employee.id}>
-                        <td><img src={profilePicture(employee.profilePic)} alt="" /></td>
+                        <td><img src={profilePicture(employee.profilePic)} className="profile" onClick={() => update(employee.id)} alt="" /></td>
                         <td>{employee.name}</td>
                         <td>{employee.gender}</td>
                         <td>{employee.department.map(dept => (<div className="dept-label">{dept}</div>))}</td>
                         <td> ₹ {employee.salary}</td>
                         <td>{stringifyDate(employee.startDate)}</td>
-                        <td><img src={deleteIcon} onClick={() => deleteEmployee(employee.id)} alt="delete" />
-                        <img src={updateIcon} onClick={() => update(employee.id)} alt="edit" /></td>
+                        <td><img src={deleteIcon} className="icon" onClick={() => deleteEmployee(employee.id)} alt="delete" />
+                        <img src={updateIcon} className="icon" onClick={() => update(employee.id)} alt="edit" /></td>
                     </tr>
                 ))
             }
@@ -52,8 +52,8 @@ const stringifyDate = (date) => {
 const deleteEmployee = (employeeId) => {
     new EmployeeService().deleteEmployee(employeeId)
     .then(responseText => {
-        window.alert("Employee Removed Successfully");
         window.location.reload();
+        window.alert("Employee Removed Successfully");
     }).catch(error => {
         console.log("Error while Removing the Employee");
     })

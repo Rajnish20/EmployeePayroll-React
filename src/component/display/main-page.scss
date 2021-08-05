@@ -50,6 +50,14 @@ td img{
     margin-right: 10px;
     cursor: pointer;
 }
+.icon:hover{
+    transform: scale(2);
+    transition: .2s;
+}
+.profile:hover{
+    transform: scale(1.2);
+    transition: .2s;   
+}
 
 .dept-label{
     background-color: #e9fea5;
