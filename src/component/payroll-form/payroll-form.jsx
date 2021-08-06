@@ -10,15 +10,15 @@ import EmployeeService from '../../service/employeeservice';
 
 const initialState = {
     name: '',
-    profile: '',
+    profilePic: '',
     gender: '',
-    department: [],    
+    departments: [],    
     salary: 40000,
     day: '1',
     month: 'Jan',
     year: '2020',
     startDate: new Date("1 Jan 2020"),
-    notes: '',
+    note: '',
     id: '',      
     
 }
@@ -29,14 +29,14 @@ class Payroll extends React.Component{
         super(props);
         this.state = {
             name:'',
-            profile:'',
+            profilePic:'',
             gender:'',
             allDepartment: [
                 'HR', 'Sales', 'Finance', 'Engineer', 'Others'
             ],
-            department:[],
+            departments:[],
             salary:'40000',
-            notes:'',
+            note:'',
             day:'1',
             month:'Jan',
             year:'2021',
@@ -64,7 +64,7 @@ class Payroll extends React.Component{
     }
 
     handleProfileChange = (e) => {
-        this.setState({profile:e.target.value});
+        this.setState({profilePic :e.target.value});
     }
 
     handleGenderChange = (e) => {
@@ -83,7 +83,7 @@ class Payroll extends React.Component{
     }
 
     handleNoteChange = (e) => {
-        this.setState({notes:e.target.value});
+        this.setState({note:e.target.value});
     } 
 
     dayChangeHandler = (event) => {
@@ -118,24 +118,25 @@ class Payroll extends React.Component{
 
 
      onCheckChange = (name) => {
-        let index = this.state.department.indexOf(name);
-        let checkArray = [...this.state.department]
+        let index = this.state.departments.indexOf(name);
+        let checkArray = [...this.state.departments]
         if (index > -1)
             checkArray.splice(index, 1)
         else
             checkArray.push(name);
-        this.setState({department:checkArray});
+        this.setState({departments:checkArray});
     }
     getChecked = (name) => {
-        return this.state.department && this.state.department.includes(name);
+        return this.state.departments && this.state.departments.includes(name);
     }
 
     componentDidMount = () => {
         let id = this.props.match.params.id;
         if(id !== undefined && id !==''){
             new EmployeeService().getEmployeeById(id)
-            .then(responseText => {
-                this.setEmployeeForm(responseText.data);
+            .then(responseDTO => {
+                let responseData = responseDTO.data;
+                this.setEmployeeForm(responseData.data);
             }).catch(error => {
                 console.log("Error while Fetching Data");
             })
@@ -143,15 +144,15 @@ class Payroll extends React.Component{
     }
 
     setEmployeeForm = (employeeData) => {
-        let date = (employeeData.startDate).split(" ");
+        let date = this.stringifyDate(employeeData.startDate).split(" ");
         this.setState({
-            id:employeeData.id,
+            id:employeeData.employeeId,
             name:employeeData.name,
             gender:employeeData.gender,
-            department:employeeData.department,
+            departments:employeeData.departments,
             salary:employeeData.salary,
-            notes:employeeData.notes,
-            profile:employeeData.profilePic,
+            note:employeeData.note,
+            profilePic:employeeData.profilePic,
             startDate:employeeData.startDate,
             day:date[0],
             month:date[1],
@@ -169,12 +170,12 @@ class Payroll extends React.Component{
             let employeeObject = {
                 id:this.state.id,
                 name: this.state.name,
-                department: this.state.department,
+                departments: this.state.departments,
                 gender:this.state.gender,
                 salary:this.state.salary,
                 startDate:this.stringifyDate(this.state.startDate),
-                notes:this.state.notes,
-                profilePic:this.state.profile,
+                note:this.state.note,
+                profilePic:this.state.profilePic,
             }
             if(this.state.isUpdate){
                 new EmployeeService().updateEmployee(employeeObject).then(responseText => {
@@ -232,23 +233,23 @@ class Payroll extends React.Component{
                             <label className="label text" htmlfor="Profile">Profile image</label>
                             <div className="profile-radio-content">
                             <label>
-                                <input type="radio" id="profile1" name="profile"
-                                value="../../assets/Ellipse -3.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile ==='../../assets/Ellipse -3.png'} />
+                                <input type="radio" id="profile1" name="profilePic"
+                                value="../../assets/Ellipse -3.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profilePic ==='../../assets/Ellipse -3.png'} />
                                 <img className="profile" id="image1"src={profile1} alt=""/>                    
                             </label>
                             <label>
-                                <input type="radio" id="profile2" name="profile"
-                                value="../../assets/Ellipse -1.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -1.png'}  />
+                                <input type="radio" id="profile2" name="profilePic"
+                                value="../../assets/Ellipse -1.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profilePic ==='../../assets/Ellipse -1.png'}  />
                                 <img className="profile" id="image2"src={profile2} alt=""/>                    
                             </label>
                             <label>
-                                <input type="radio" id="profile3" name="profile"
-                                value="../../assets/Ellipse -8.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -8.png'} />
+                                <input type="radio" id="profile3" name="profilePic"
+                                value="../../assets/Ellipse -8.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profilePic ==='../../assets/Ellipse -8.png'} />
                                 <img className="profile" id="image3"src={profile3} alt=""/>                    
                             </label>
                             <label>
-                                <input type="radio" id="profile4" name="profile"
-                                value="../../assets/Ellipse -7.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profile==='../../assets/Ellipse -7.png'} />
+                                <input type="radio" id="profile4" name="profilePic"
+                                value="../../assets/Ellipse -7.png" required onChange={(e) => this.handleProfileChange(e)} checked={this.state.profilePic ==='../../assets/Ellipse -7.png'} />
                                 <img className="profile" id="image4"src={profile4} alt=""/>                    
                             </label>
                             </div>
@@ -265,7 +266,7 @@ class Payroll extends React.Component{
                             </div>
                         </div>
                         <div className="row-content">
-                            <label className="label text" for="department">Department</label>
+                            <label className="label text" htmlfor="departments">Department</label>
                             <div>
                             {this.state.allDepartment.map(item => (
                                 <span key={item}>
@@ -282,8 +283,8 @@ class Payroll extends React.Component{
                             <error-output className="salary-error" htmlFor="salary">{this.state.salaryError}</error-output>
                         </div>
                         <div className="row-content">
-                            <label className="label text" for="notes">Note</label>
-                            <textarea id="notes" className="input" name="notes" placeholder="" value={this.state.notes} onChange={(e) => this.handleNoteChange(e)}></textarea>
+                            <label className="label text" htmlfor="note">Note</label>
+                            <textarea id="note" className="input" name="note" placeholder="" value={this.state.note} onChange={(e) => this.handleNoteChange(e)}></textarea>
                         </div>
                         <div className="row-content">
                             <label className="label text" for="startDate">Start Date</label>

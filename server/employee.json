@@ -161,6 +161,18 @@
       "startDate": "18 Jul 2021",
       "notes": "",
       "profilePic": "../../assets/Ellipse -3.png"
+    },
+    {
+      "id": 18,
+      "name": "Simran Kaur",
+      "department": [
+        "Sales"
+      ],
+      "gender": "Female",
+      "salary": "49997",
+      "startDate": "16 Jul 2021",
+      "notes": "",
+      "profilePic": "../../assets/Ellipse -1.png"
     }
   ]
 }

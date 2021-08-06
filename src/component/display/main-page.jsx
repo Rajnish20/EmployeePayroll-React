@@ -27,15 +27,15 @@ const Display = (props) => {
                 </tr>
                     {
                     props.employeeArray.map((employee) => (
-                    <tr key = {employee.id}>
-                        <td><img src={profilePicture(employee.profilePic)} className="profile" onClick={() => update(employee.id)} alt="" /></td>
+                    <tr key = {employee.employeeId}>
+                        <td><img src={profilePicture(employee.profilePic)} className="profile" onClick={() => update(employee.employeeId)} alt="" /></td>
                         <td>{employee.name}</td>
                         <td>{employee.gender}</td>
-                        <td>{employee.department.map(dept => (<div className="dept-label">{dept}</div>))}</td>
+                        <td>{employee.departments.map(dept => (<div className="dept-label">{dept}</div>))}</td>
                         <td> ₹ {employee.salary}</td>
                         <td>{stringifyDate(employee.startDate)}</td>
-                        <td><img src={deleteIcon} className="icon" onClick={() => deleteEmployee(employee.id)} alt="delete" />
-                        <img src={updateIcon} className="icon" onClick={() => update(employee.id)} alt="edit" /></td>
+                        <td><img src={deleteIcon} className="icon" onClick={() => deleteEmployee(employee.employeeId)} alt="delete" />
+                        <img src={updateIcon} className="icon" onClick={() => update(employee.employeeId)} alt="edit" /></td>
                     </tr>
                 ))
             }
@@ -44,11 +44,6 @@ const Display = (props) => {
     )
 }
 
-const stringifyDate = (date) => {
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    const newDate = !date ? "undefined" : new Date(Date.parse(date)).toLocaleDateString('en-GB', options);
-    return newDate;
-  }
 const deleteEmployee = (employeeId) => {
     new EmployeeService().deleteEmployee(employeeId)
     .then(responseText => {
@@ -59,6 +54,11 @@ const deleteEmployee = (employeeId) => {
     })
 }
 
+const stringifyDate = (date) => {
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const newDate = !date ? "undefined" : new Date(Date.parse(date)).toLocaleDateString('en-GB', options);
+    return newDate;
+  }
 
 const profiles = ["../../assets/Ellipse -1.png","../../assets/Ellipse -3.png","../../assets/Ellipse -7.png",
             "../../assets/Ellipse -8.png"];

@@ -22,7 +22,8 @@ class HomePage extends React.Component {
 
   getEmployeeList = () => {
     this.employeeService.getAllEmployees()
-    .then(responseData => {
+    .then(responseDTO => {
+      let responseData = responseDTO.data;
       console.log("Data received after GET Call :\n" + responseData.data);
       this.setState({allEmployeeArray: responseData.data});
       this.setState({employeeArray: responseData.data});
