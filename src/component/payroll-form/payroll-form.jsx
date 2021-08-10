@@ -45,7 +45,9 @@ class Payroll extends React.Component{
             nameError:'',
             salaryError:'',
             dateError:'',
-            isError:'',
+            isErrorForName:'',
+            isErrorForDate:'',
+            isErrorForSalary:'',
             isUpdate:'',
 
         }
@@ -56,10 +58,10 @@ class Payroll extends React.Component{
         const nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
         if(nameRegex.test(e.target.value)){
             this.setState({nameError: ''})
-            this.setState({isError:false})
+            this.setState({isErrorForName:false})
         }else{
             this.setState({nameError:'Invalid Name'});
-            this.setState({isError:true})
+            this.setState({isErrorForName:true})
         }
     }
 
@@ -75,10 +77,10 @@ class Payroll extends React.Component{
         this.setState({salary:e.target.value});
         if(e.target.value < 40000){
             this.setState({salaryError:'Salary must be greater than 40000'})
-            this.setState({isError:true})
+            this.setState({isErrorForSalary:true})
         }else{
             this.setState({salaryError:''});
-            this.setState({isError:false});
+            this.setState({isErrorForSalary:false});
         }
     }
 
@@ -109,10 +111,10 @@ class Payroll extends React.Component{
           this.setState({isError:true})
         } else if (difference / (1000 * 60 * 60 * 24) > 30) {
             this.setState({dateError:'Date is beyond 30 days'});
-            this.setState({isError:true})
+            this.setState({isErrorForDate:true})
         } else {
           this.setState({dateError:''});
-          this.setState({isError:false});
+          this.setState({isErrorForDate:false});
         }
     }
 
@@ -164,7 +166,7 @@ class Payroll extends React.Component{
     save = async (event) => {
         event.preventDefault();
         console.log("save button clicked");
-        if(this.state.isError){
+        if(this.state.isErrorForName || this.state.isErrorForDate || this.state.isErrorForSalary){
             window.alert("Please Fill correct values");
         }else{
             let employeeObject = {
@@ -203,7 +205,7 @@ class Payroll extends React.Component{
         const options = { day: 'numeric', month: 'short', year: 'numeric' };
         const newDate = !date ? "undefined" : new Date(Date.parse(date)).toLocaleDateString('en-GB', options);
         return newDate;
-      }
+    }
 
     reset =() => {
         this.setState({...initialState});

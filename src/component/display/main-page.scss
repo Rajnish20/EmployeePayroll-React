@@ -49,14 +49,13 @@ td:first-child{
 td img{
     margin-right: 10px;
     cursor: pointer;
+    transition: .2s;   
 }
 .icon:hover{
     transform: scale(2);
-    transition: .2s;
 }
 .profile:hover{
     transform: scale(1.2);
-    transition: .2s;   
 }
 
 .dept-label{
@@ -68,5 +67,4 @@ td img{
     padding:1px 7px;
     text-align: center;
     font-weight: 300;
-    margin-bottom: 8px;
 }
